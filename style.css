@@ -1,0 +1,12 @@
+h1,
+p {
+  font-family: Lato;
+}
+/* 
+* {
+  outline: 1px red solid;
+} */
+
+span {
+  width: fit-content;
+}
