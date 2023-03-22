@@ -5,25 +5,31 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './style.css';
 
 type ownProps = {
-  visitDates: string[];
+  visits: Date[];
+  setVisits: React.Dispatch<React.SetStateAction<Date[]>>;
 };
 
-export default function VisitList({ visitDates }: ownProps) {
-  const [startDate, setStartDate] = useState(new Date());
+export default function VisitList({ visits, setVisits }: ownProps) {
 
   return (
     <React.Fragment>
-      <div className="overflow-y-auto">
+      <div className="flex flex-col overflow-y-auto">
+        {visits.map((date, index) =>
         <DatePicker
-          className="rounded-full bg-yellow-600 text-white w-40 py-1 text-center"
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
+          className="mb-1 rounded-full bg-yellow-600 text-white w-40 py-1 text-center"
+          selected={date}
+          onChange={(date) => {
+            const newVisits = [...visits];
+            newVisits.splice(index, 1,  date);
+            setVisits(newVisits)
+          }}
           showTimeSelect
           showTimeSelectOnly
           timeIntervals={15}
           timeCaption="Time"
           dateFormat="dd/MM/yyyy h:mm aa"
         />
+        )}
       </div>
     </React.Fragment>
   );

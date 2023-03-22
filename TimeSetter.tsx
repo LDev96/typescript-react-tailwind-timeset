@@ -7,19 +7,11 @@ import VisitList from './VisitList';
 
 export default function TimeSetter() {
   const [startDate, setStartDate] = useState(new Date());
-  const [visits, setVisits] = useState<string[]>(null);
-
-  const dateString = `${startDate.toLocaleDateString(
-    'en-AU'
-  )} ${startDate.toLocaleTimeString('en-AU', {
-    hour12: false,
-    hour: '2-digit',
-    minute: '2-digit',
-  })}`;
+  const [visits, setVisits] = useState<Date[]>([]);
 
   function handleSubmit(date: Date) {
     setStartDate(date);
-    setVisits([...visits, dateString])
+    setVisits([...visits, date])
   }
 
   return (
@@ -28,14 +20,16 @@ export default function TimeSetter() {
         <div className="flex justify-center">
           <DatePicker
             selected={startDate}
-            onChange={(date) => handleSubmit(date)}
+            onChange={handleSubmit}
             timeInputLabel="Time:"
             dateFormat="MM/dd/yyyy h:mm aa"
+            excludeDates={visits}
+            minDate={new Date()}
             inline
           />
         </div>
         <div className="flex flex-col p-2 col-span-2">
-          <VisitList visitDates={visits}/>
+          <VisitList visits={visits} setVisits={setVisits}/>
         </div>
       </div>
     </React.Fragment>
