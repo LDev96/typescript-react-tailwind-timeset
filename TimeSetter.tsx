@@ -6,8 +6,10 @@ import './style.css';
 import VisitList from './VisitList';
 
 export default function TimeSetter() {
+  const pastDate = new Date();
+  pastDate.setHours(-24);
   const [startDate, setStartDate] = useState(new Date());
-  const [visits, setVisits] = useState<Date[]>([new Date()]);
+  const [visits, setVisits] = useState<Date[]>([pastDate, new Date()]);
 
   function handleSubmit(date: Date) {
     setStartDate(date);
@@ -24,6 +26,7 @@ export default function TimeSetter() {
             timeInputLabel="Time:"
             dateFormat="MM/dd/yyyy h:mm aa"
             excludeDates={visits}
+            highlightDates={visits}
             minDate={new Date()}
             inline
           />
